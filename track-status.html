@@ -1,1 +1,51 @@
-<!-- محتوى صفحة track-status.html سيكون هنا -->
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>تتبع حالة الطلب</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body { font-family: sans-serif; padding: 40px; background: #f4f4f4; color: #333; direction: rtl; text-align: center; }
+    h1 { color: #1e293b; }
+    input { padding: 10px; width: 300px; margin: 10px; font-size: 16px; border-radius: 6px; border: 1px solid #ccc; }
+    button { padding: 10px 20px; background: #1e293b; color: white; border: none; border-radius: 6px; font-size: 16px; cursor: pointer; }
+    .status-box { background: white; margin-top: 30px; padding: 20px; border-radius: 8px; max-width: 500px; margin: 30px auto; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+  </style>
+</head>
+<body>
+
+<h1>تتبع حالة طلب التمويل</h1>
+
+<p>أدخل رقم الهوية أو رقم الطلب لمعرفة آخر حالة لطلبك</p>
+
+<input type="text" id="requestId" placeholder="مثال: 10258">
+<br>
+<button onclick="checkStatus()">تحقق من الحالة</button>
+
+<div class="status-box" id="statusBox" style="display:none;">
+  <h3>نتيجة التتبع:</h3>
+  <p id="statusMessage"></p>
+</div>
+
+<script>
+function checkStatus() {
+  var id = document.getElementById("requestId").value.trim();
+  var statusMessage = document.getElementById("statusMessage");
+  var box = document.getElementById("statusBox");
+
+  if (!id) return alert("يرجى إدخال رقم الطلب أو الهوية");
+
+  var statuses = {
+    "10258": "طلبك قيد المراجعة. سيتم الرد خلال 24 ساعة.",
+    "10259": "تمت الموافقة المبدئية على طلبك. جارٍ التواصل مع المؤجر.",
+    "10260": "عذرًا، لم يتم قبول الطلب لعدم توافق الشروط.",
+  };
+
+  statusMessage.innerText = statuses[id] || "لم يتم العثور على حالة بهذا الرقم. يرجى التحقق والمحاولة مجددًا.";
+  box.style.display = "block";
+}
+</script>
+
+</body>
+</html>
