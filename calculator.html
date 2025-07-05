@@ -8,7 +8,7 @@
   <style>
     body { font-family: sans-serif; padding: 40px; background: #f5f7fa; color: #333; direction: rtl; text-align: center; }
     h1 { color: #1e293b; }
-    input, select { padding: 10px; width: 300px; margin: 10px auto; display: block; font-size: 16px; }
+    input { padding: 10px; width: 300px; margin: 10px auto; display: block; font-size: 16px; }
     button { padding: 12px 24px; font-size: 16px; background: #1e293b; color: white; border: none; border-radius: 6px; cursor: pointer; }
     .result { background: white; padding: 20px; margin-top: 20px; border-radius: 8px; max-width: 400px; margin: 20px auto; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
   </style>
@@ -18,30 +18,30 @@
 <h1>حاسبة القسط الفوري</h1>
 
 <input type="number" id="rent" placeholder="أدخل قيمة الإيجار السنوي (ريال)">
-<select id="duration">
-  <option value="12">سنة واحدة (12 شهر)</option>
-  <option value="24">سنتان (24 شهر)</option>
-</select>
+<input type="number" id="months" placeholder="عدد الأشهر (1 إلى 12)" min="1" max="12">
 <button onclick="calculate()">احسب الآن</button>
 
 <div class="result" id="output" style="display:none;">
   <h3>النتائج:</h3>
   <p>الدفعة الأولى (30٪): <span id="upfront"></span> ريال</p>
   <p>القسط الشهري: <span id="monthly"></span> ريال</p>
-  <p>عدد الأقساط: <span id="months"></span> شهر</p>
+  <p>عدد الأقساط: <span id="monthsOutput"></span> شهر</p>
 </div>
 
 <script>
 function calculate() {
   var rent = parseFloat(document.getElementById('rent').value);
-  var months = parseInt(document.getElementById('duration').value);
+  var months = parseInt(document.getElementById('months').value);
   if (!rent || rent <= 0) return alert("أدخل قيمة صحيحة للإيجار");
+  if (!months || months < 1 || months > 12) return alert("أدخل عدد أشهر بين 1 و12");
+
   var upfront = rent * 0.3;
   var remaining = rent - upfront;
   var monthly = (remaining / months).toFixed(2);
+
   document.getElementById("upfront").innerText = upfront.toLocaleString();
   document.getElementById("monthly").innerText = monthly.toLocaleString();
-  document.getElementById("months").innerText = months;
+  document.getElementById("monthsOutput").innerText = months;
   document.getElementById("output").style.display = 'block';
 }
 </script>
